@@ -1,0 +1,87 @@
+{
+    "Teams": [
+        {
+            "Id": 1,
+            "Name": "Team Alpha",
+            "SupportedSkills": ["Networking", "Hardware"]
+        },
+        {
+            "Id": 2,
+            "Name": "Team Beta",
+            "SupportedSkills": ["Software", "Database"]
+        }
+    ],
+    "Users": [
+        {
+            "Id": 1,
+            "Name": "Alice Smith",
+            "Skills": ["Networking", "Hardware"],
+            "TeamId": 1,
+            "CurrentWorkload": 2,
+            "IsAvailable": true
+        },
+        {
+            "Id": 2,
+            "Name": "Bob Johnson",
+            "Skills": ["Software", "Database"],
+            "TeamId": 2,
+            "CurrentWorkload": 1,
+            "IsAvailable": true
+        },
+        {
+            "Id": 3,
+            "Name": "Charlie Davis",
+            "Skills": ["Security", "Database"],
+            "TeamId": 2,
+            "CurrentWorkload": 3,
+            "IsAvailable": false
+        }
+    ],
+    "Tickets": [
+        {
+            "Id": 1,
+            "Title": "Network connectivity issue",
+            "Description": "User cannot connect to the corporate network.",
+            "Priority": 2,
+            "Status": 0,
+            "RequiredSkills": ["Networking"],
+            "OwningTeamId": 1
+        },
+        {
+            "Id": 2,
+            "Title": "Software installation request",
+            "Description": "User needs new software installed on their workstation.",
+            "Priority": 1,
+            "Status": 0,
+            "RequiredSkills": ["Software"],
+            "OwningTeamId": 2
+        },
+        {
+            "Id": 3,
+            "Title": "Security vulnerability report",
+            "Description": "Potential security vulnerability found in the system.",
+            "Priority": 3,
+            "Status": 0,
+            "RequiredSkills": ["Security"],
+            "OwningTeamId": 2
+        },
+        {
+            "Id": 4,
+            "Title": "Database performance issue",
+            "Description": "Database is running slower than usual.",
+            "Priority": 2,
+            "Status": 0,
+            "RequiredSkills": ["Database"],
+            "OwningTeamId": 2
+        },
+        {
+            "Id": 5,
+            "Title": "Hardware failure",
+            "Description": "User's workstation is not powering on.",
+            "Priority": 3,
+            "Status": 0,
+            "RequiredSkills": ["Hardware"],
+            "OwningTeamId": 1
+        }
+    ]
+}

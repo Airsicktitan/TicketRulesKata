@@ -1,0 +1,70 @@
+using TicketRulesKata.Models;
+
+namespace TicketRulesKata.Services;
+
+public class TicketAssignmentService
+{
+    public AssignmentResult AssignTicket(
+        Ticket ticket,
+        List<User> users,
+        List<Team> teams
+    )
+    {
+        var owningTeam = teams.FirstOrDefault(team => team.Id == ticket.OwningTeamId);
+        if(owningTeam == null)
+        {
+            return new AssignmentResult
+            {
+                Ticket = ticket,
+                AssignedUser = null,
+                WasAssigned = false,
+                Reason = $"Owning team with ID {ticket.OwningTeamId} not found."
+            };
+        }
+
+        var teamSupportsRequiredSkills = ticket.RequiredSkills.All(skill => owningTeam.SupportedSkills.Contains(skill));
+        if(!teamSupportsRequiredSkills)        {
+            return new AssignmentResult
+            {
+                Ticket = ticket,
+                AssignedUser = null,
+                WasAssigned = false,
+                Reason = $"Owning team '{owningTeam.Name}' does not support all required skills for the ticket."
+            };
+        }
+
+        var availableUsers = users.Where(user => user.TeamId == owningTeam.Id && user.IsAvailable).ToList();
+        if(!availableUsers.Any())
+        {
+            return new AssignmentResult
+            {
+                Ticket = ticket,
+                AssignedUser = null,
+                WasAssigned = false,
+                Reason = $"No available users in owning team '{owningTeam.Name}' to assign the ticket."
+            };
+        }
+
+        var qualifiedUsers = availableUsers.Where(user => ticket.RequiredSkills.All(skill => user.Skills.Contains(skill))).ToList();
+        if(!qualifiedUsers.Any())
+        {
+            return new AssignmentResult
+            {
+                Ticket = ticket,
+                AssignedUser = null,
+                WasAssigned = false,
+                Reason = $"No available users in owning team '{owningTeam.Name}' have all the required skills to assign the ticket."
+            };
+        }
+
+        var assignedUser = qualifiedUsers.OrderBy(user => user.CurrentWorkload).ThenBy(user => user.Id).First();
+
+        return new AssignmentResult
+        {
+            Ticket = ticket,
+            AssignedUser = assignedUser,
+            WasAssigned = true,
+            Reason = $"{assignedUser.Name} was assigned because they are available, on {owningTeam.Name}, have all required skills, and have the lowest workload."
+        };
+    }
+}
