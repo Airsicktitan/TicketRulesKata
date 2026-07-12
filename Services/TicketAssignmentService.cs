@@ -13,6 +13,8 @@ public class TicketAssignmentService
     {
 
         var ticketStatus = ticket.Status;
+        var workloadLimit = 2;
+        
         if(ticketStatus != Status.Open && ticketStatus != Status.New)
         {
             return new AssignmentResult
@@ -73,7 +75,7 @@ public class TicketAssignmentService
 
         var assignedUser = qualifiedUsers.OrderBy(user => user.CurrentWorkload).ThenBy(user => user.Id).First();
 
-        var workloadLimit = 2;
+        
         if(assignedUser.CurrentWorkload >= workloadLimit)
         {
             return new AssignmentResult
@@ -86,6 +88,11 @@ public class TicketAssignmentService
         }
 
         assignedUser.CurrentWorkload++;
+
+        if(ticketStatus == Status.New || ticketStatus == Status.Open)
+        {
+            ticket.Status = Status.InProgress;
+        }
 
         return new AssignmentResult
         {
