@@ -24,7 +24,7 @@ class Program
             Console.WriteLine("Failed to load data.");
             return;
         }
-        
+
         Console.WriteLine($"Teams loaded: {response.Teams.Count}");
         Console.WriteLine($"Users loaded: {response.Users.Count}");
         Console.WriteLine($"Tickets loaded: {response.Tickets.Count}\n\n");
@@ -35,7 +35,7 @@ class Program
         foreach (var t in orderedPriorityTickets)
         {
             var result = ticketAssignmentService.AssignTicket(t, response.Users, response.Teams);
-            Console.WriteLine($"Ticket '{t.Title}' assigned: {result.WasAssigned}, Reason: {result.Reason}, Priority: {t.Priority}\n");
+            Console.WriteLine($"Ticket '{t.Title}' assigned: {result.WasAssigned}, Reason: {result.Reason}. Priority: {t.Priority}, Status: {t.Status}\n");
         }
         
         foreach (var u in response.Users)
