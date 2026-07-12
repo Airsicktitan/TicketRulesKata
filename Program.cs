@@ -24,8 +24,7 @@ class Program
             Console.WriteLine("Failed to load data.");
             return;
         }
-
-        Console.WriteLine(Directory.GetCurrentDirectory());
+        
         Console.WriteLine($"Teams loaded: {response.Teams.Count}");
         Console.WriteLine($"Users loaded: {response.Users.Count}");
         Console.WriteLine($"Tickets loaded: {response.Tickets.Count}\n\n");
