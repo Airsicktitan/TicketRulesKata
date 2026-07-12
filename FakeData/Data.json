@@ -35,6 +35,14 @@
             "TeamId": 2,
             "CurrentWorkload": 3,
             "IsAvailable": false
+        },
+        {
+            "Id": 4,
+            "Name": "Diana Evans",
+            "Skills": ["Networking", "Software"],
+            "TeamId": 1,
+            "CurrentWorkload": 0,
+            "IsAvailable": true
         }
     ],
     "Tickets": [

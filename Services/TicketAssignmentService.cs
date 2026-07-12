@@ -1,4 +1,5 @@
 using TicketRulesKata.Models;
+using TicketRulesKata.Enums;
 
 namespace TicketRulesKata.Services;
 
@@ -58,6 +59,20 @@ public class TicketAssignmentService
         }
 
         var assignedUser = qualifiedUsers.OrderBy(user => user.CurrentWorkload).ThenBy(user => user.Id).First();
+
+        var workloadLimit = 2;
+        if(assignedUser.CurrentWorkload >= workloadLimit)
+        {
+            return new AssignmentResult
+            {
+                Ticket = ticket,
+                AssignedUser = null,
+                WasAssigned = false,
+                Reason = $"User '{assignedUser.Name}' has reached the workload limit of {workloadLimit} and cannot be assigned the ticket."
+            };
+        }
+
+        assignedUser.CurrentWorkload++;
 
         return new AssignmentResult
         {
