@@ -6,5 +6,6 @@ public enum Status
     InProgress,
     Resolved,
     Closed,
-    Reopened
+    Reopened,
+    New
 }

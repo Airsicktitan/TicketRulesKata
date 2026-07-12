@@ -11,6 +11,19 @@ public class TicketAssignmentService
         List<Team> teams
     )
     {
+
+        var ticketStatus = ticket.Status;
+        if(ticketStatus != Status.Open && ticketStatus != Status.New)
+        {
+            return new AssignmentResult
+            {
+                Ticket = ticket,
+                AssignedUser = null,
+                WasAssigned = false,
+                Reason = $"Ticket status is '{ticketStatus}', only 'Open' or 'New' tickets can be assigned."
+            };
+        }
+
         var owningTeam = teams.FirstOrDefault(team => team.Id == ticket.OwningTeamId);
         if(owningTeam == null)
         {
